@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
 
 	console.log('Test function called...')
 
-	cmd.run(``, (err, data, std) => console.log("\n\n" + data))
+	cmd.run(`ls`, (err, data, stderr) => console.log("\n\n" + data))
 
 	return {
 
