@@ -12,7 +12,8 @@ exports.handler = async (event, context) => {
 
 	console.log('Test function called...')
 
-	cmd.run(`ls`, (err, data, stderr) => console.log("\n\n" + data))
+	cmd.run(`cd functions
+	ls`, (err, data, stderr) => console.log("\n\n" + data))
 
 	return {
 
