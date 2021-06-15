@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{% if locale %}{{locale}}{% else %}{{config.locales[0]}}{% endif %}">
+<head>
+	
+	{%- if config.google.gtm_id and config.environment == 'production' %}
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','{{config.google.gtm_id}}');</script>
+	<!-- End Google Tag Manager -->
+	{% endif %}
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="robots" content="{{'noindex' if noindex else 'index'}}, {{'nofollow' if nofollow else 'follow'}}">
+	
+	<title>{% if title %}{{title}}{% else %}{{config.title}}{% endif %}</title>
+	<meta name="description" content="{% if description %}{{description}}{% else %}{{config.description}}{% endif %}">
+	<meta name="keywords" content="{% if keywords %}{{keywords}}{% else %}{{config.keywords}}{% endif %}">
+
+	{# Base URL config #}
+	{% if config.baseURL %}<base href="{{config.baseURL}}">{% endif -%}
+
+	{# Canonical URL #}
+	{% if canonical %}<link rel="canonical" href="{{canonical}}">{% endif -%}
+
+	{# Alternate hreflang attribute config #}
+	{% for lang, url in alternate %}
+    <link rel="alternate" hreflang="{{lang}}" href="{{url}}">
+	{%- endfor -%}
+
+	{# meta list config #}
+	{% for meta in config.meta %}
+	<meta{% for key, value in meta %} {{key}}="{{value}}"{% endfor %}>
+	{%- endfor -%}
+	
+	{# Links list config #}
+	{% for link in config.link %}
+	<link{% for key, value in link %} {{key}}="{{value}}"{% endfor %}>
+	{%- endfor -%}
+
+	{# Open Graph metadata #}
+	{% for key, value in config.openGraph %}
+	<meta property="og:{{key}}" content="{{ openGraph[key] if openGraph[key] else value}}">
+	{%- endfor -%}
+	
+	{# Twitter Card metadata #}
+	{% for key, value in config.twitter %}
+	<meta name="twitter:{{key}}" content="{{ twitter[key] if twitter[key] else value}}">
+	{%- endfor %}	
+
+</head>
+<body>
+	{%- if config.google.gtm_id and config.environment == 'production' %}
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{config.google.gtm_id}}"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	{% endif %}
+
+	{% include "partials/partial.njk" %}
+
+	{% block content %}
+	{% endblock %}
+
+	{% for script in config.script %}
+	<script src="{{ script.src }}"{% if script.attribute %} {{ script.attribute }}{% endif -%}></script>
+	{%- endfor %}	
+
+</body>
+</html>
