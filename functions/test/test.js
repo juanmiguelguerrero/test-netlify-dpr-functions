@@ -1,3 +1,6 @@
+const cmd = require('node-cmd');
+
+
 exports.handler = async (event, context) => {
 	
 	// event.path - The request path
@@ -8,6 +11,8 @@ exports.handler = async (event, context) => {
 	// event.isBase64Encoded - A boolean flag to indicate if the applicable request payload is Base64-encode
 
 	console.log('Test function called...')
+
+	cmd.run(``, (err, data, std) => console.log("\n\n" + data))
 
 	return {
 
