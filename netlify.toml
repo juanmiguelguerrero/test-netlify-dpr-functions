@@ -12,6 +12,6 @@
 	framework = "#custom"
 
 [[redirects]]
-	from = "/*"
+	from = "/:slug"
 	to = "/.netlify/functions/test"
 	status = 200	

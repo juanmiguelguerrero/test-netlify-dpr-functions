@@ -61,6 +61,7 @@
     "webpack-cli": "^4.4.0"
   },
   "dependencies": {
+    "@netlify/functions": "^0.7.2",
     "node-cmd": "^4.0.0"
   },
   "alias": {}
